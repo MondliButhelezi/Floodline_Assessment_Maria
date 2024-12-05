@@ -37,23 +37,15 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/proj4.js"></script>
-        <script src="js/proj4leaflet.js"></script>
         <script src="data/Kransdraai_FloodRisk_1.js"></script>
         <script src="data/Kransdraai_HDA_Perimeter_2.js"></script>
         <script src="data/Mariaskop_FloodRisk_3.js"></script>
         <script src="data/Maria_Kop_Farms_4.js"></script>
         <script src="data/Mariaskop_Perimeter_5.js"></script>
         <script>
-        var crs = new L.Proj.CRS('EPSG:3857', '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs', {
-            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
-        });
         var map = L.map('map', {
-            crs: crs,
-            continuousWorld: false,
-            worldCopyJump: false, 
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-30.281917586182807,29.044636141246976],[-30.08153436462932,29.390375437094303]]);
+        }).fitBounds([[-30.267023966631783,29.05026554562704],[-30.074969121471774,29.381599037480818]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -93,15 +85,19 @@
         function setBounds() {
             map.setMaxBounds(map.getBounds());
         }
-        map.createPane('pane_Map_Extent_Satellite_0');
-        map.getPane('pane_Map_Extent_Satellite_0').style.zIndex = 400;
-	var img_Map_Extent_Satellite_0 = 'data/Map_Extent_Satellite_0.png';
-        var img_bounds_Map_Extent_Satellite_0 = [[-30.27715129672866,29.06112706451113],[-30.086310127360473,29.373884513830117]];
-        var layer_Map_Extent_Satellite_0 = new L.imageOverlay(img_Map_Extent_Satellite_0,
-                                              img_bounds_Map_Extent_Satellite_0,
-                                              {pane: 'pane_Map_Extent_Satellite_0'});
-        bounds_group.addLayer(layer_Map_Extent_Satellite_0);
-        map.addLayer(layer_Map_Extent_Satellite_0);
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
         function pop_Kransdraai_FloodRisk_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
@@ -641,7 +637,8 @@
                         <td>' + (feature.properties['SymbolID'] !== null ? autolinker.link(feature.properties['SymbolID'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td class="visible-with-data" id="AltMode"colspan="2"><strong>AltMode</strong><br />' + (feature.properties['AltMode'] !== null ? autolinker.link(feature.properties['AltMode'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">AltMode</th>\
+                        <td>' + (feature.properties['AltMode'] !== null ? autolinker.link(feature.properties['AltMode'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Base</th>\
@@ -760,7 +757,8 @@
         {label: '<b>Kransdraai</b>', selectAllCheckbox: true, children: [
             {label: '<img src="legend/Kransdraai_HDA_Perimeter_2.png" /> Kransdraai_HDA_Perimeter', layer: layer_Kransdraai_HDA_Perimeter_2},
             {label: 'Kransdraai_FloodRisk<br /><table><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_43.png" /></td><td>4</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_54.png" /></td><td>5</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_65.png" /></td><td>6</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_76.png" /></td><td>7</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_87.png" /></td><td>8</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_98.png" /></td><td>9</td></tr><tr><td style="text-align: center;"><img src="legend/Kransdraai_FloodRisk_1_9.png" /></td><td></td></tr></table>', layer: layer_Kransdraai_FloodRisk_1},]},
-            {label: "Map_Extent_Satellite", layer: layer_Map_Extent_Satellite_0},]
+        {label: '<b>Floodline Maps</b>', selectAllCheckbox: true, children: [
+            {label: "Google Satellite", layer: layer_GoogleSatellite_0, radioGroup: 'bm' },]},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
@@ -810,11 +808,6 @@
               layer.added = true;
               addLabel(layer, i);
               i++;
-        });
-        L.ImageOverlay.include({
-            getBounds: function () {
-                return this._bounds;
-            }
         });
         resetLabels([layer_Kransdraai_HDA_Perimeter_2,layer_Maria_Kop_Farms_4,layer_Mariaskop_Perimeter_5]);
         map.on("zoomend", function(){
